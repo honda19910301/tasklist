@@ -15,14 +15,14 @@ import utils.DBUtil;
 
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+
     public EditServlet() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    EntityManager em = DBUtil.createEntityManager();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = DBUtil.createEntityManager();
 
         Task t = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
@@ -31,11 +31,13 @@ public class EditServlet extends HttpServlet {
         request.setAttribute("task", t);
         request.setAttribute("_token", request.getSession().getId());
 
+        if(t != null) {
         request.getSession().setAttribute("task_id", t.getId());
+        }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
         rd.forward(request, response);
-	    
-	}
+
+    }
 
 }
